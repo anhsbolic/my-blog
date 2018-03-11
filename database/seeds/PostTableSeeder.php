@@ -19,14 +19,17 @@ class PostTableSeeder extends Seeder
         $posts = [];
         $faker = Factory::Create();
         for($i = 0; $i < 10; $i++){
+            $date = date('Y-m-d H:i:s', strtotime("2018-03-08 11:43:00 +{$i} days"));
             $image = 'Post_Image_' . rand(1, 5) . '.jpg';
             $posts[$i] = [
                 'author_id' => rand(1, 3),
                 'title' => $faker -> sentence(rand(10, 12), true),
-                'slug' => $faker -> slug(),
-                'excerpt' => $faker -> text(rand(250, 300), true),
+                'slug' => $faker -> slug(),//slug nyambungin 2 kata dgn '-'
+                'excerpt' => $faker -> text(rand(250, 300), true),//yg tampil d preview
                 'content' => $faker -> paragraphs(rand(10, 12), true),
                 'image' => rand(0, 1) == 1 ? $image : NULL,
+                'created_at' => $date,
+                'updated_at' => $date
             ];
         }
         DB::table('posts')->insert($posts);

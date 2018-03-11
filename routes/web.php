@@ -11,6 +11,4 @@
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.main_layout');
-});
+Route::get('/', 'BlogController@index');
