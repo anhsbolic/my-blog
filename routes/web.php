@@ -12,3 +12,5 @@
 */
 
 Route::get('/', 'BlogController@index');
+Route::get('/blog/{slug}', 'BlogController@show')->name('blog.show');
+
