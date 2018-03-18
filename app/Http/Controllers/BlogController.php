@@ -15,7 +15,7 @@ class BlogController extends Controller
     }
 
     public function show($slug){
-        $data = Post::with('author')->where('slug', $slug)->get();
-        return view('blog.show', compact('data'));
+       $post = \App\Post::with('author')->where('slug', $slug)->first();
+       return view('blog.show', compact('post'));
     }
 }
