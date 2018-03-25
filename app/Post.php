@@ -9,6 +9,8 @@ class Post extends Model
 {
     protected $table = 'posts';
 
+    protected $fillable = ['title','slug','author_id','excerpt','content'];
+
     function getImagePostAttribute(){
         $imgPath = "";
         if ($this->image != null){
@@ -30,4 +32,5 @@ class Post extends Model
     function scopeLatestFirst($query){
         return $query->orderBy('created_at','DESC');
     }
+
 }

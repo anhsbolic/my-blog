@@ -1,41 +1,73 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>MyBlog | Dashboard</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="css/skins/_all-skins.min.css">
-  <!-- bootstrap wysihtml5 - text editor -->
-  <link rel="stylesheet" href="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+@extends('layouts.backend.main')
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-</head>
-<body class="hold-transition skin-blue sidebar-mini">
-  @yield('content')
-<!-- ./wrapper -->
+@section('content')
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Blog<small>All post</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li class="active">
+        <i class="fa fa-dashboard"></i> All post</li>
+    </ol>
+  </section>
 
-<!-- jQuery 2.2.3 -->
-<script src="js/jquery-2.2.3.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
-<script src="js/app.min.js"></script>
-</body>
-</html>
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <a href="{{ route('backend.blog.create') }}" class="btn btn-sm btn-success">
+              <i class="fa fa-plus"></i>Add New Post   
+            </a>
+          </div>
+
+          <!-- /.box-header -->
+          <div class="box-body ">
+            @if (session('message'))
+                <div class="row">
+                  <div class="col-sm-12">
+                    <alert class="alert alert-info">{{ session('message') }}</alert>
+                  </div>
+                </div>
+            @endif
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Action</th>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($posts as $post)
+                  <tr>
+                    <td>
+                      <a href="{{ route('backend.blog.destroy', $post->id) }}" class="btn btn-danger btn-sm">
+                        <i class="fa fa-trash"></i></a>
+                      <a href="{{ route('backend.blog.edit', $post->id) }}" class="btn btn-info btn-sm">
+                        <i class="fa fa-edit"></i></a>
+                    </td>
+                    <td>{{ $post->title }}</td>
+                    <td>{{ $post->author->name }}</td>
+                    <td>{{ $post->created_at }}</td>
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        {{ $posts->links() }}
+        <!-- /.box -->
+      </div>
+    </div>
+    <!-- ./row -->
+  </section>
+  <!-- /.content -->
+</div>
+@endsection
