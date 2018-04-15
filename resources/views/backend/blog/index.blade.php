@@ -28,11 +28,7 @@
           <!-- /.box-header -->
           <div class="box-body ">
             @if (session('message'))
-                <div class="row">
-                  <div class="col-sm-12">
-                    <alert class="alert alert-info">{{ session('message') }}</alert>
-                  </div>
-                </div>
+                <div class="alert alert-info" style="width:100%">{{ session('message') }}</div>
             @endif
             <table class="table table-bordered">
               <thead>
@@ -47,10 +43,12 @@
                 @foreach ($posts as $post)
                   <tr>
                     <td>
-                      <a href="{{ route('backend.blog.destroy', $post->id) }}" class="btn btn-danger btn-sm">
-                        <i class="fa fa-trash"></i></a>
+                      {!! Form::open(['method'=>'DELETE','route'=>['backend.blog.destroy',$post->id]]) !!}
+                      <button type="submit" class="btn btn-danger btn-sm">
+                        <i class="fa fa-trash"></i></button>
                       <a href="{{ route('backend.blog.edit', $post->id) }}" class="btn btn-info btn-sm">
                         <i class="fa fa-edit"></i></a>
+                      {!! Form::close() !!}
                     </td>
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->author->name }}</td>

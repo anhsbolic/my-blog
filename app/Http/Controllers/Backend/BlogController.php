@@ -73,7 +73,8 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        //
+        $posts = Post::findOrFail($id);
+        return view("backend.blog.edit", compact("posts"));
     }
 
     /**
@@ -85,7 +86,11 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $posts = Post::findOrFail($id);
+        $data = $request->all();
+        $posts->update($data);
+        return redirect(route("backend.blog.index"))
+        ->with("message","Your post was updated successfully");
     }
 
     /**
@@ -96,6 +101,10 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $posts = Post::findOrFail($id);
+        $posts->delete();
+
+        return redirect(route("backend.blog.index"))
+        ->with("message","Your post was deleted successfully");
     }
 }
